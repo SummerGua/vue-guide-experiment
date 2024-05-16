@@ -1,0 +1,6 @@
+#!/usr/bin/env sh
+. "$(dirname -- "$0")/_/husky.sh"
+
+echo "trigger pre-commit"
+pnpm run format
+pnpm exec lint-staged
