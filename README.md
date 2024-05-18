@@ -27,13 +27,13 @@ const config = {
   // 不出现跳过按钮
   allowSkip: false,
   // 步骤
-  step: [
+  steps: [
     {
-      element: document.querySelector('.tour-step-1')
+      target: '.tour-step-1'
       text: '第一步'
     },
     {
-      element: document.querySelector('.tour-step-2')
+      target: '.tour-step-2'
       text: '第二步'
     }
   ],

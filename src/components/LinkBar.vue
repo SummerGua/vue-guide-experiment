@@ -6,7 +6,7 @@ import { Home, MoreOne } from '@icon-park/vue-next';
   <div class="flex gap-4 justify-center p-2">
     <router-link to="/">
       <span
-        id="step-two"
+        id="tour-step-2"
         class="flex gap-2 border-2 dark:text-gray-300 border-black dark:border-gray-300 p-2 hover:bg-gray-400"
       >
         HOME<home size="24" />
@@ -14,7 +14,7 @@ import { Home, MoreOne } from '@icon-park/vue-next';
     </router-link>
     <router-link to="/about">
       <span
-        id="step-three"
+        id="tour-step-3"
         class="flex gap-1 border-2 dark:text-gray-300 border-black dark:border-gray-300 p-2 hover:bg-gray-400"
       >
         ABOUT
