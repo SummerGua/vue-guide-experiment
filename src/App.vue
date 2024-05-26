@@ -1,29 +1,6 @@
 <script setup lang="ts">
 import TheFooter from '@/components/TheFooter.vue';
 import LinkBar from '@/components/LinkBar.vue';
-import { createTour } from './tour';
-
-createTour({
-  route: {
-    path: '/',
-    mode: 'history',
-  },
-  // 步骤
-  steps: [
-    {
-      target: '#tour-step-1',
-      text: '第一步',
-    },
-    {
-      target: '#tour-step-2',
-      text: '第二步',
-    },
-    {
-      target: '#tour-step-3',
-      text: '第3步',
-    },
-  ],
-});
 </script>
 
 <template>

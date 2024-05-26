@@ -1,8 +1,8 @@
+import { Router } from 'vue-router';
+
 export interface TourConfig {
-  route: {
-    mode: 'hash' | 'history';
-    path: string;
-  };
+  router: Router;
+  routeName: string;
   once?: boolean;
   allowSkip?: boolean;
   steps: Step[];

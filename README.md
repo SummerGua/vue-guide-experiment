@@ -56,3 +56,5 @@ Vue.use();
 const app = createApp(App);
 app.use(tour);
 ```
+
+`router.beforeEach`的回调函数会形成一个栈，每次写上一个回调都会增加一个，而不是覆盖上一个。

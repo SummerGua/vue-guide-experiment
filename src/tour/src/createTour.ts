@@ -1,44 +1,50 @@
-import { onMounted } from 'vue';
+import {
+  setElementContent,
+  setTipPosition,
+  moveTipTextPosition,
+} from '../utils';
 import { type TourConfig } from './types';
+import Tour from './Tour.vue';
+import { createApp } from 'vue';
 
 const initTour = (config: TourConfig) => {
-  if (!config) throw new Error('config is empty');
-  const { route, steps } = config;
-  if (route.mode === 'hash') {
-    window.onhashchange = (e) => {
-      console.log(e);
-    };
-  } else {
-    window.onpopstate = (e) => {
-      console.log(e);
-    };
-  }
-  const mask = setMask();
-  const tip = initTip();
+  if (!config) throw new Error('tour config is empty');
+
+  const { steps } = config;
+
+  const mask = initMask();
+  const { tipHole, tipText } = initTip();
 
   let index = 0;
   document.body.addEventListener('click', () => {
+    const tourContainer = document.createElement('div');
+    tourContainer.setAttribute('id', 'vue-tour-container');
+    document.body.appendChild(tourContainer);
+    const tour = createApp(Tour);
+    tour.mount('#vue-tour-container');
     if (index === steps.length) {
-      removeTip(tip, mask);
+      removeElements([tipHole, mask, tipText]);
       return;
     } else {
       const target = steps[index].target;
       const targetEle = document.querySelector(target);
       if (!targetEle) throw new Error(`target ${target} not found`);
       const rect = targetEle.getBoundingClientRect();
-      setTipPosition(tip, rect);
+      setTipPosition(tipHole, rect);
+      moveTipTextPosition(tipText, rect);
+      setElementContent(tipText, steps[index].text);
       index++;
     }
   });
 };
 
-const setMask = () => {
+const initMask = () => {
   const transparentMask = document.createElement('div');
   const maskStyle = `position:fixed;
     top:0;
     left:0;
-    width:100vw;
-    height:100vh;
+    width:100%;
+    height:100%;
     opacity:1;
     z-index:9997;`;
   transparentMask.setAttribute('style', maskStyle);
@@ -46,17 +52,9 @@ const setMask = () => {
   return transparentMask;
 };
 
-const setTipPosition = (div: HTMLElement, rect: DOMRect) => {
-  div.style.left = `${rect.left}px`;
-  div.style.top = `${rect.top}px`;
-  div.style.width = `${rect.width}px`;
-  div.style.height = `${rect.height}px`;
-  div.style.transform = 'scale(1.1)';
-};
-
 const initTip = () => {
-  const tip = document.createElement('div');
-  tip.setAttribute(
+  const tipHole = document.createElement('div');
+  tipHole.setAttribute(
     'style',
     ` position: absolute;
       z-index: 9998;
@@ -66,30 +64,35 @@ const initTip = () => {
       height: 0;
       transition: all 0.4s;`,
   );
-  const text = document.createElement('p');
-  text.setAttribute(
+  const tipText = document.createElement('div');
+  tipText.setAttribute(
     'style',
     `
-  color: #fff;
-  font-size: 14px;
-  position:absolute;
-  z-index: 9998;
-  top:200px;
-  left:200px`,
+    color: #fff;
+    font-size: 14px;
+    position:absolute;
+    width: fit-content;
+    height: 0;
+    z-index: 9998;
+    background-color: rgba(0, 0, 0, 0.5);
+    transition: all 0.4s;`,
   );
-  text.innerText = 'texttext';
-  document.body.appendChild(tip);
-  document.body.appendChild(text);
-  return tip;
+  document.body.appendChild(tipHole);
+  document.body.appendChild(tipText);
+  return { tipHole, tipText };
 };
 
-const removeTip = (tip: HTMLElement, mask: HTMLElement) => {
-  document.body.removeChild(tip);
-  document.body.removeChild(mask);
+const removeElements = (elements: HTMLElement[]) => {
+  elements.forEach((e) => {
+    e && document.body.removeChild(e);
+  });
 };
 
 export const createTour = (config: TourConfig) => {
-  onMounted(() => {
-    initTour(config);
+  const { router, routeName } = config;
+  router.afterEach((to, from) => {
+    if (to.name !== from.name && to.name === routeName) {
+      initTour(config);
+    }
   });
 };
