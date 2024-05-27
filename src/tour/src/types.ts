@@ -11,7 +11,7 @@ export interface TourConfig {
   change?: (...args: unknown[]) => unknown;
 }
 
-interface Step {
+export interface Step {
   target: string;
   text: string;
 }

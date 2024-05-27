@@ -1,3 +1,3 @@
-import { createTour } from './createTour';
+import tourPlugin from './createTour';
 
-export { createTour };
+export { tourPlugin };
