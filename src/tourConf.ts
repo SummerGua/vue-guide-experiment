@@ -15,7 +15,11 @@ export const tourConf = {
     },
     {
       target: '#tour-step-3',
-      text: '第3步',
+      text: '第三步',
+    },
+    {
+      target: '#tour-step-4',
+      text: '第四步',
     },
   ],
 };

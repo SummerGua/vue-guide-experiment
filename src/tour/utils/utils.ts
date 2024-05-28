@@ -2,12 +2,12 @@ export const getOutlineSize = (selector: string) => {
   const el = document.querySelector(selector);
   console.log(selector);
   if (!el) throw new Error(`element ${selector} not found`);
-  const { width, height, left, top } = el.getBoundingClientRect();
+  const { width, height, x, y } = el.getBoundingClientRect();
   return {
     width,
     height,
-    left,
-    top,
+    x: x + window.scrollX,
+    y: y + window.scrollY,
   };
 };
 

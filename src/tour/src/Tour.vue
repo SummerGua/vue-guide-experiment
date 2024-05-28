@@ -35,21 +35,33 @@ const tipAreaStyle = computed(() => {
 const currentStepNum = ref(0);
 const prev = () => {
   currentStepNum.value > 0 && currentStepNum.value--;
-  const { top, left, width, height } = getOutlineSize(
+  const { x, y, width, height } = getOutlineSize(
     props.steps[currentStepNum.value].target,
   );
-  tipTop.value = top;
-  tipLeft.value = left;
+  document
+    .querySelector(props.steps[currentStepNum.value].target)
+    ?.scrollIntoView({
+      behavior: 'smooth',
+      block: 'center',
+    });
+  tipTop.value = y;
+  tipLeft.value = x;
   tipWidth.value = width;
   tipHeight.value = height;
 };
 const next = () => {
   currentStepNum.value < props.steps.length - 1 && currentStepNum.value++;
-  const { top, left, width, height } = getOutlineSize(
+  const { x, y, width, height } = getOutlineSize(
     props.steps[currentStepNum.value].target,
   );
-  tipTop.value = top;
-  tipLeft.value = left;
+  document
+    .querySelector(props.steps[currentStepNum.value].target)
+    ?.scrollIntoView({
+      behavior: 'smooth',
+      block: 'center',
+    });
+  tipTop.value = y;
+  tipLeft.value = x;
   tipWidth.value = width;
   tipHeight.value = height;
 };

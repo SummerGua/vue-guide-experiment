@@ -16,6 +16,6 @@ import LinkBar from '@/components/LinkBar.vue';
     </h1>
     <link-bar></link-bar>
     <router-view class="m-4" />
-    <the-footer></the-footer>
+    <the-footer id="tour-step-4"></the-footer>
   </div>
 </template>
